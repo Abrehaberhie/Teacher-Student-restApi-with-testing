@@ -12,22 +12,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/teacher")
 public class TeacherController {
 @Autowired
 private TeacherService teacherService;
 
-    @PostMapping("/createTeacher")
+    @PostMapping("/create")
     public ResponseEntity<?> saveTeacher(@RequestBody @Valid Teacher teacher)
     {
         return new ResponseEntity<>(teacherService.createTeacher(teacher), HttpStatus.CREATED);
     }
-    @GetMapping("getTeacher/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getTeacherById(@PathVariable("id") Integer id)
     {
         return new ResponseEntity<>(teacherService.getTeacherById(id),HttpStatus.FOUND);
     }
 
-    @GetMapping("/getAllTeachers")
+    @GetMapping("/all")
     public ResponseEntity<List<Teacher>> getAllTeacher()
     {
         List<Teacher> list= new ArrayList<Teacher>();
@@ -37,12 +38,12 @@ private TeacherService teacherService;
         return new ResponseEntity<>(list,HttpStatus.OK);
 
     }
-    @PutMapping("/updateTeacher")
-    public ResponseEntity<?>  updateTeacher(@RequestBody Teacher teacher)
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?>  updateTeacher(@RequestBody Teacher teacher, @PathVariable("id") Integer id)
     {
         return new ResponseEntity<>( teacherService.updateTeacher(teacher),HttpStatus.OK);
     }
-    @DeleteMapping("/deletTeacher/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deletTeacherById(@PathVariable("id") Integer id)
     {
         teacherService.deletTeacher(id);

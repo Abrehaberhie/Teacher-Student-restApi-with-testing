@@ -1,7 +1,9 @@
 package com.binary.jpaMappingOneToMany.service;
 
 import com.binary.jpaMappingOneToMany.model.Student;
+import com.binary.jpaMappingOneToMany.model.Teacher;
 import com.binary.jpaMappingOneToMany.repository.StudentRepository;
+import com.binary.jpaMappingOneToMany.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,9 @@ import java.util.Optional;
 public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     public List<Student> getAllStudents()
     {
@@ -41,6 +46,11 @@ public class StudentService {
 
     public Student createStudent(Student student)
     {
+        if(student.getTeacher() != null && student.getTeacher().getId() == null){
+            Teacher savedTeacher = teacherRepository.save(student.getTeacher());
+            student.setTeacher(savedTeacher);
+        }
+
         return studentRepository.save(student);
     }
 
@@ -51,6 +61,10 @@ public class StudentService {
         existingStu.setId(student.getId());
         existingStu.setSname(student.getSname());
         existingStu.setSclass(student.getSclass());
+        if(student.getTeacher() != null && student.getTeacher().getId() == null){
+            Teacher savedTeacher = teacherRepository.save(student.getTeacher());
+            existingStu.setTeacher(savedTeacher);
+        }
         return studentRepository.save(existingStu);
     }
 

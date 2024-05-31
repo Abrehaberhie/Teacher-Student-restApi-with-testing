@@ -1,9 +1,7 @@
 package com.binary.jpaMappingOneToMany.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -29,4 +27,8 @@ public class Student {
      @Min(6)
      @Max(45)
      private int age;
+     @ManyToOne(fetch = FetchType.EAGER)
+     @JoinColumn(name = "teacher")
+     private Teacher teacher;
+
 }

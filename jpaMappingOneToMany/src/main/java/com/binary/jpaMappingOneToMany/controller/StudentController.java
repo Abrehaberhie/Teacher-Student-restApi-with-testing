@@ -13,22 +13,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/student")
 public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @PostMapping("/createStudent")
+    @PostMapping("/create")
     public ResponseEntity<?> saveStudent(@RequestBody @Valid Student student)
     {
         return new ResponseEntity<>(studentService.createStudent(student), HttpStatus.CREATED);
     }
-    @GetMapping("getStudents/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getStudentById(@PathVariable("id") Integer id)
     {
         return new ResponseEntity<>(studentService.getStudentById(id),HttpStatus.FOUND);
     }
-    @GetMapping("/getAllStudents")
+    @GetMapping("/all")
     public ResponseEntity<List<Student>> getAllStudents()
     {
         List<Student> list= new ArrayList<Student>();
@@ -37,13 +37,13 @@ public class StudentController {
         return new ResponseEntity<>(list,HttpStatus.OK);
 
     }
-    @PutMapping("/updateStudents")
-    public ResponseEntity<?>  updateStudent(@RequestBody Student student)
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?>  updateStudent(@RequestBody Student student, @PathVariable("id") Integer id)
     {
         return new ResponseEntity<>(studentService.updateStudent(student),HttpStatus.OK);
     }
 
-    @DeleteMapping("/deletStudent/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deletStudentById(@PathVariable("id") Integer id)
     {
         studentService.deletStudent(id);

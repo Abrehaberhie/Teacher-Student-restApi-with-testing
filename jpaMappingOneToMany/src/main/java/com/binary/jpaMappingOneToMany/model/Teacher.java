@@ -1,5 +1,6 @@
 package com.binary.jpaMappingOneToMany.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -30,7 +31,8 @@ public class Teacher {
     @Min(6)
     @Max(45)
     private int age;
-   @OneToMany(cascade = CascadeType.ALL)
+   @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacher", fetch = FetchType.EAGER)
+   @JsonIgnore
    List<Student> stuList= new ArrayList<Student>();
 
 }
