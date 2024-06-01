@@ -65,7 +65,7 @@ public class SecurityConfigg {
 //                                .anyRequest().permitAll())
         authorizeHttpRequests(authorize ->
         authorize
-                .requestMatchers("/getAllStudents", "/getAllTeachers", "/register", "/login").permitAll()
+                .requestMatchers("/student/all", "/teacher/all", "/member/register", "/member/login").permitAll()
                 .anyRequest().authenticated())
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable);
